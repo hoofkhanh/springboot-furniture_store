@@ -42,9 +42,8 @@
                     
                     <div class="input-form">
                       <!-- <span>User name</span> -->
-                        <input type="text" placeholder="Tài khoản" name="username" th:value="${customerDto.username}">
+                        <input type="email" placeholder="Email" name="username" th:value="${customerDto.username}">
                     </div>
-                    <div class="alert alert-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
                     
                     <div class="input-form">
                         <!-- <span>Password</span> -->
@@ -58,6 +57,7 @@
                     </div>
                     <div class="input-form">
                         <p>Bạn đã có tài khoản ? <a th:href="@{/login}"> Đăng nhập ngay </a></p>
+                        <p>Bạn đã quên mật khẩu ? <a th:href="@{/forgot-password}"> Quên mật khẩu</a></p>
                     </div>
                     <div class="input-form">
                         <input type="submit" value="Đăng kí">

@@ -43,12 +43,17 @@ public class ProductController {
 			}
 		}
 	}
+	
+	
 
 	@GetMapping("/products")
 	public String products(Model model, Authentication authentication) {
 		model.addAttribute("title", "Menu");
 		List<Product> products = this.productService.getAllProduct();
 		model.addAttribute("productFeed", products);
+		
+		List<Product> searchList = this.productService.getAllProduct();
+		model.addAttribute("searchList", searchList);
 
 		List<Product> listViewProduct = this.productService.getAllProduct();
 		model.addAttribute("productList", products);
@@ -65,13 +70,44 @@ public class ProductController {
 	
 	@GetMapping("/products/bestSeller")
 	public String productsBestSeller(Model model,@RequestParam(name = "category_id", defaultValue = "-1") Long category_id, Authentication authentication) {
-		model.addAttribute("title", "Menu");
+		model.addAttribute("title", "Shop Detail");
 		List<Product> products = this.productService.getAllProduct();
 		model.addAttribute("productFeed", products);
+		
+		List<Product> searchList = this.productService.getAllProduct();
+		model.addAttribute("searchList", searchList);
 
 		List<Product> listViewProduct = this.productService.findProductBestSeller_DESC_SOLD();
 		if(category_id != -1) {
 			listViewProduct= this.productService.findProductBestSeller_DESC_SOLD_BY_CATE(category_id);
+		}
+		
+		model.addAttribute("productList", listViewProduct);
+		model.addAttribute("listViewProduct", listViewProduct);
+
+		List<CategoryDto> getCategoryAndProduct = this.categoryService.getCategoryAndProduct();
+		model.addAttribute("categoryAndProductList", getCategoryAndProduct);
+
+		model.addAttribute("totalOfProduct", products.size());
+		
+		model.addAttribute("category_id", category_id);
+
+		checkTotalItemOfCustomer(authentication, model);
+		return "shop";
+	}
+	
+	@GetMapping("/products/sale")
+	public String product_sale(Model model,@RequestParam(name = "category_id", defaultValue = "-1") Long category_id, Authentication authentication) {
+		model.addAttribute("title", "Shop Detail");
+		List<Product> products = this.productService.getAllProduct();
+		model.addAttribute("productFeed", products);
+		
+		List<Product> searchList = this.productService.getAllProduct();
+		model.addAttribute("searchList", searchList);
+
+		List<Product> listViewProduct = this.productService.findProduct_sale();
+		if(category_id != -1) {
+			listViewProduct= this.productService.findProduct_saleByCate(category_id);
 		}
 		
 		model.addAttribute("productList", listViewProduct);
@@ -94,6 +130,9 @@ public class ProductController {
 		model.addAttribute("title", "Menu");
 		List<Product> products = this.productService.getAllProduct();
 		model.addAttribute("productFeed", products);
+		
+		List<Product> searchList = this.productService.getAllProduct();
+		model.addAttribute("searchList", searchList);
 
 		List<Product> listViewProduct = new ArrayList<>();
 		List<Product> productListByCate = new ArrayList<>();
@@ -118,6 +157,37 @@ public class ProductController {
 		checkTotalItemOfCustomer(authentication, model);
 		return "shop";
 	}
+	
+	@GetMapping("/products/search")
+	public String findProductSearchByName(Model model,String name, Authentication authentication) {
+		model.addAttribute("title", "Menu");
+		List<Product> products = this.productService.getAllProduct();
+		model.addAttribute("productFeed", products);
+		
+		List<Product> searchList = this.productService.getAllProduct();
+		model.addAttribute("searchList", searchList);
+
+		List<Product> productSearch =  this.productService.findProduct_search(name);
+
+		List<Product> listViewProduct = this.productService.findProduct_search(name);
+		model.addAttribute("productList", productSearch);
+		model.addAttribute("listViewProduct", listViewProduct);
+
+		List<CategoryDto> getCategoryAndProduct = this.categoryService.getCategoryAndProduct();
+		model.addAttribute("categoryAndProductList", getCategoryAndProduct);
+
+		model.addAttribute("totalOfProduct", products.size());
+
+//		model.addAttribute("category_id", category_id);
+
+		checkTotalItemOfCustomer(authentication, model);
+		
+		model.addAttribute("name", name);
+		
+		return "shop";
+	}
+	
+	
 
 	@GetMapping("/products/high-to-low-price")
 	public String sortProducts_hightToLowPrice(Model model,
@@ -125,6 +195,9 @@ public class ProductController {
 		model.addAttribute("title", "Menu");
 		List<Product> products = this.productService.getAllProduct();
 		model.addAttribute("productFeed", products);
+		
+		List<Product> searchList = this.productService.getAllProduct();
+		model.addAttribute("searchList", searchList);
 
 		List<Product> productList_sort_highToLowPrice = new ArrayList<>();
 		if (category_id != -1) {
@@ -155,6 +228,9 @@ public class ProductController {
 		model.addAttribute("title", "Menu");
 		List<Product> products = this.productService.getAllProduct();
 		model.addAttribute("productFeed", products);
+		
+		List<Product> searchList = this.productService.getAllProduct();
+		model.addAttribute("searchList", searchList);
 
 		List<Product> productList_sort_highToLowPrice = new ArrayList<>();
 		if (category_id != -1) {
@@ -185,6 +261,8 @@ public class ProductController {
 		model.addAttribute("title", "Menu");
 		List<Product> products = new ArrayList<>();
 		model.addAttribute("productFeed", products);
+		
+		
 
 		List<Category> categories = categoryService.findAllByActivated();
 		

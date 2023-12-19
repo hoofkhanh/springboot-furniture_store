@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hokhanh.libary.model.CartItem;
 import com.hokhanh.libary.model.Customer;
+import com.hokhanh.libary.model.Order;
 import com.hokhanh.libary.model.Product;
 import com.hokhanh.libary.model.ShoppingCart;
 import com.hokhanh.libary.repository.CustomerRepository;
@@ -39,7 +40,7 @@ public class CartController {
 
 	@Autowired
 	private ShoppingCartService shoppingCartService;
-	
+
 	public void checkTotalItemOfCustomer(Authentication authentication, Model model) {
 		if (authentication != null) {
 			Customer customer = this.customerService.findByUsername(authentication.getName());
@@ -50,13 +51,28 @@ public class CartController {
 		}
 	}
 
-
 	@GetMapping("/cart")
 	public String cart(Model m, Authentication authentication, HttpSession session) {
 		m.addAttribute("title", "Cart");
-		
+
 		Customer customer = this.customerService.findByUsername(authentication.getName());
 		ShoppingCart shoppingCart = customer.getShoppingCarts();
+
+		if (shoppingCart != null && shoppingCart.getCartItems() != null
+				&& shoppingCart.getCartItems().isEmpty() == false) {
+			List<CartItem> cartItemsDelete = new ArrayList<>();
+			for (CartItem cartItem : shoppingCart.getCartItems()) {
+				if (cartItem.getProduct().getCurrentQuantity() <= 0) {
+					cartItemsDelete.add(cartItem);
+				}
+			}
+			
+			for (CartItem cartItem : cartItemsDelete) {
+				this.shoppingCartService.deleteItemInCart(cartItem.getProduct(), authentication.getName());
+			}
+		}
+		
+		shoppingCart = customer.getShoppingCarts();
 
 		if (shoppingCart != null && shoppingCart.getCartItems() != null
 				&& shoppingCart.getCartItems().isEmpty() == false) {
@@ -77,7 +93,7 @@ public class CartController {
 		}
 
 		m.addAttribute("shoppingCart", shoppingCart);
-		
+
 		List<Product> products = this.productService.getAllProduct();
 		m.addAttribute("productFeed", products);
 
@@ -98,20 +114,19 @@ public class CartController {
 	@RequestMapping(value = "/cart/update", method = { RequestMethod.GET, RequestMethod.PUT })
 	@ResponseBody
 	public String updateItemInCart(int quantity, Long id, Authentication authentication) {
-		
-		Product product = this.productService.findById(id);
-		
 
-		ShoppingCart cart =  this.shoppingCartService.updateItemInCart(product, quantity, authentication.getName());
-		if(cart != null) {
+		Product product = this.productService.findById(id);
+
+		ShoppingCart cart = this.shoppingCartService.updateItemInCart(product, quantity, authentication.getName());
+		if (cart != null) {
 			CartItem cartItem = null;
 			for (CartItem cartI : cart.getCartItems()) {
-				if(cartI.getProduct().getId() == id) {
+				if (cartI.getProduct().getId() == id) {
 					cartItem = cartI;
 				}
 			}
-			return cartItem.getTotalPrice()+"";
-		}else {
+			return cartItem.getTotalPrice() + "";
+		} else {
 			System.out.println("null");
 			return "0";
 		}
@@ -122,48 +137,50 @@ public class CartController {
 	public String deleteItemInCart(Long id, Authentication authentication) {
 		Product product = this.productService.findById(id);
 
-		if(product == null) {
+		if (product == null) {
 			return "failed";
-		}else {
-			ShoppingCart cart =  this.shoppingCartService.deleteItemInCart(product, authentication.getName());
-			if(cart != null) {
+		} else {
+			ShoppingCart cart = this.shoppingCartService.deleteItemInCart(product, authentication.getName());
+			if (cart != null) {
 				return "good delete";
-			}else {
+			} else {
 				return "bad";
 			}
-		}		
+		}
 	}
-	
+
 	@GetMapping("/checkTotalPirce")
 	@ResponseBody
 	public String checkTotalPirceOfCart(Authentication authentication) {
-		if(authentication != null) {
+		if (authentication != null) {
 			Customer customer = this.customerService.findByUsername(authentication.getName());
-			if(customer.getShoppingCarts() != null) {
-				return customer.getShoppingCarts().getTotalPrice()+"";
+			if (customer.getShoppingCarts() != null) {
+				return customer.getShoppingCarts().getTotalPrice() + "";
 			}
 		}
-		
-		return "0";	
+
+		return "0";
 	}
-	
+
 	@GetMapping("/checkEmptyCartItems")
 	@ResponseBody
 	public String checkEmptyCartItems(Authentication authentication) {
-		if(authentication != null) {
+		if (authentication != null) {
 			Customer customer = this.customerService.findByUsername(authentication.getName());
 			ShoppingCart shoppingCart = customer.getShoppingCarts();
-			if(shoppingCart != null) {
-				if(shoppingCart.getCartItems() != null && shoppingCart.getCartItems().isEmpty() == false) {
+			if (shoppingCart != null) {
+				if (shoppingCart.getCartItems() != null && shoppingCart.getCartItems().isEmpty() == false) {
 					return "not empty";
-				}else {
+				} else {
 					return "empty";
 				}
-			}else {
+			} else {
 				return "empty";
 			}
 		}
-		
+
 		return "empty";
 	}
+	
+	
 }

@@ -59,7 +59,7 @@ public class AdminServiceImpl implements AdminService {
 				return temp_phoneNumber;
 			}else {
 				if(adminImage.isEmpty() == false) {
-					imageUpload.uploadImageCustomer(adminImage);
+					imageUpload.uploadImageAdmin(adminImage);
 					admin.setImage(Base64.getEncoder().encodeToString(adminImage.getBytes()));
 				}else {
 					Admin temp = this.adminRepository.findByUsername(admin.getUsername());

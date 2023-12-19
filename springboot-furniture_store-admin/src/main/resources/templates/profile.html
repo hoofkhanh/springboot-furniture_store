@@ -1,191 +1,233 @@
 <!DOCTYPE html>
 <html>
+
 <head th:replace="~{fragments :: head}">
 </head>
-<link th:href="@{/css/profileCss.css}" rel="stylesheet" type="text/css"></link>
+<link th:href="@{/css/profileCss.css}" rel="stylesheet" type="text/css">
+</link>
+
 <body>
-	
+
 	<!-- Page Wrapper -->
-    <div id="wrapper">
+	<div id="wrapper">
 
-        <!-- Sidebar -->
-        <ul th:replace="~{fragments :: sideBar}"></ul>
-        <!-- End of Sidebar -->
+		<!-- Sidebar -->
+		<ul th:replace="~{fragments :: sideBar}"></ul>
+		<!-- End of Sidebar -->
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Main Content -->
-            <div id="content">	
+			<!-- Main Content -->
+			<div id="content">
 
-                <!-- Topbar -->
-                <nav th:replace="~{fragments :: topBar}"></nav>
-                <!-- End of Topbar -->
-                
-                 <div class="container-fluid">
+				<!-- Topbar -->
+				<nav th:replace="~{fragments :: topBar}"></nav>
+				<!-- End of Topbar -->
 
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Thông tin cá nhân</h1>
-                    </div>
-                    
-                    <div class="container-xl px-4 mt-4">
-  
-    <hr class="mt-0 mb-4">
-    <form th:action="@{/updateAdmin}" method="post" enctype="multipart/form-data">
-    <div class="row">
-		<div th:if="${phoneNumberError}" th:text="${phoneNumberError}" style="color: red; text-align: center; font-size: 30px;"></div>
-          	<div th:if="${success}" th:text="${success}" style="color: green; text-align: center; font-size: 30px;"></div>
-        <div class="col-xl-4">
-            <!-- Profile picture card-->
-            <div class="card mb-4 mb-xl-0">
-                <div class="card-header">Hình ảnh</div>
-                <div class="card-body text-center">
-                    <!-- Profile picture image-->
-                    <img id="image1" th:if="${admin.image == null}" th:src="@{/img/avatar-facebook-mac-dinh-19.jpg}" style="width: 100px; height: 100px;  margin-left: 105px; border-radius: 50%; object-fit: cover;cursor: pointer; display: none;" />
-					<img id="image2" th:if="${admin.image != null}" th:src="'data:image/jpeg;base64,' + ${admin.image}" style="width: 100px; height: 100px; margin-left: 105px; border-radius: 50%; object-fit: cover; cursor: pointer; display: none;" />        
-			            
-                    <!-- Profile picture help block-->
-                    <br>
-                    <!-- Profile picture upload button-->
-                    <input class="btn btn-primary"  type="file" id="customerImage" name="adminImage" >
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-8">
-            <!-- Account details card-->
-            <div class="card mb-4">
-                <div class="card-header">Chi tiết tài khoản</div>
-                <div class="card-body">
-                    
-						<input type="hidden" th:value="${admin.id}" name="id" >
-         			   <input type="hidden" th:value="${admin.password}" name="password">
-                        <!-- Form Group (username)-->
-                        <div class="mb-3">
-                            <label class="small mb-1" for="inputUsername">Tài khoản</label>
-                            <input class="form-control" id="inputUsername" name="username" type="text" th:value="${admin.username}" readonly >
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="small mb-1" for="genderId">Nam</label>
-                            <input  name="gender" id="genderId" type="radio" value="Nam" th:checked="${admin.gender == 'Nam'}"> 
-                            
-                            <label class="small mb-1" for="genderId" style="margin-left: 10px;">Nữ</label>
-                            <input  name="gender" id="genderId" type="radio" value="Nữ" th:checked="${admin.gender == 'Nữ'}">
-                        </div>
-                        
-                 
-                        <!-- Form Row-->
-                        <div class="row gx-3 mb-3">
-                            <!-- Form Group (first name)-->
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputFirstName">Tên</label>
-                                <input class="form-control" id="inputFirstName" type="text" name="firstName" placeholder="Enter your first name" th:value="${admin.firstName}">
-                            </div>
-                            <!-- Form Group (last name)-->
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputLastName">Họ</label>
-                                <input class="form-control" id="inputLastName" type="text" name="lastName" placeholder="Enter your last name" th:value="${admin.lastName}">
-                            </div>
-                        </div>
-                        <!-- Form Row        -->
-                        <div class="row gx-3 mb-3">
-        
-                            <!-- Form Group (location)-->
-<!--                            <div class="col-md-6">
+				<div class="container-fluid">
+
+					<!-- Page Heading -->
+					<div class="d-sm-flex align-items-center justify-content-between mb-4">
+						<h1 class="h3 mb-0 text-gray-800">Thông tin cá nhân</h1>
+					</div>
+
+					<div class="container-xl px-4 mt-4">
+
+						<hr class="mt-0 mb-4">
+						<form th:action="@{/updateAdmin}" method="post" enctype="multipart/form-data">
+							<div class="row">
+								<div th:if="${phoneNumberError}" th:text="${phoneNumberError}"
+									style="color: red; text-align: center; font-size: 30px;"></div>
+								<div th:if="${success}" th:text="${success}"
+									style="color: green; text-align: center; font-size: 30px;"></div>
+								<div class="col-xl-4">
+									<!-- Profile picture card-->
+									<div class="card mb-4 mb-xl-0">
+										<div class="card-header">Hình ảnh</div>
+										<div class="card-body text-center">
+											<!-- Profile picture image-->
+											<img id="image1" th:if="${admin.image == null}"
+												th:src="@{/img/avatar-facebook-mac-dinh-19.jpg}"
+												style="width: 100px; height: 100px;  margin-left: 105px; border-radius: 50%; object-fit: cover;cursor: pointer; display: none;" />
+											<img id="image2" th:if="${admin.image != null}"
+												th:src="'data:image/jpeg;base64,' + ${admin.image}"
+												style="width: 100px; height: 100px; margin-left: 105px; border-radius: 50%; object-fit: cover; cursor: pointer; display: none;" />
+
+											<!-- Profile picture help block-->
+											<br>
+											<!-- Profile picture upload button-->
+											<input class="btn btn-primary" type="file" id="customerImage"
+												name="adminImage">
+										</div>
+									</div>
+								</div>
+								<div class="col-xl-8">
+									<!-- Account details card-->
+									<div class="card mb-4">
+										<div class="card-header">Chi tiết tài khoản</div>
+										<div class="card-body">
+
+											<input type="hidden" th:value="${admin.id}" name="id">
+											<input type="hidden" th:value="${admin.password}" name="password">
+											<!-- Form Group (username)-->
+											<div class="mb-3">
+												<label class="small mb-1" for="inputUsername">Tài khoản</label>
+												<input class="form-control" id="inputUsername" name="username"
+													type="text" th:value="${admin.username}" readonly>
+											</div>
+
+											<div class="mb-3">
+												<label class="small mb-1" for="genderId">Nam</label>
+												<input name="gender" id="genderId" type="radio" value="Nam"
+													th:checked="${admin.gender == 'Nam'}">
+
+												<label class="small mb-1" for="genderId"
+													style="margin-left: 10px;">Nữ</label>
+												<input name="gender" id="genderId" type="radio" value="Nữ"
+													th:checked="${admin.gender == 'Nữ'}">
+											</div>
+
+
+											<!-- Form Row-->
+											<div class="row gx-3 mb-3">
+												<!-- Form Group (first name)-->
+												<div class="col-md-6">
+													<label class="small mb-1" for="inputFirstName">Tên</label>
+													<input class="form-control" id="inputFirstName" type="text"
+														name="firstName" placeholder="Enter your first name"
+														th:value="${admin.firstName}">
+												</div>
+												<!-- Form Group (last name)-->
+												<div class="col-md-6">
+													<label class="small mb-1" for="inputLastName">Họ</label>
+													<input class="form-control" id="inputLastName" type="text"
+														name="lastName" placeholder="Enter your last name"
+														th:value="${admin.lastName}">
+												</div>
+											</div>
+											<!-- Form Row        -->
+											<div class="row gx-3 mb-3">
+
+												<!-- Form Group (location)-->
+												<!--                            <div class="col-md-6">
                                 <label class="small mb-1" for="inputLocation">Location</label>
                                 <input class="form-control" id="inputLocation" type="text" placeholder="Enter your location" value="San Francisco, CA">
                             </div>
--->                            
-                            <div class="col-md-6" th:if="${admin.city != null and admin.city.country !=null}" >
-							  <label class="small mb-1" for="countryId">Quốc Gia *</label>
-					         <select  id="countryId"  style="height: 30px; border-radius: 5px;width: 300px;"   name="country" th:value="${admin.city.country}" required>	      
-					          		<option style="text-align: center;" th:value="null">--Chọn--</option>
-						            <option th:each="country : ${countryList}" th:value="${country.id}" th:text="${country.name}" th:selected="${country.id == admin.city.country.id}"></option>
-					          </select>
-				          </div>
-				          
-				          <div class="col-md-6" th:if="${admin.city == null or admin.city.country == null}">
-							  <label class="small mb-1" for="countryId">Quốc Gia *</label>
-					         <select id="countryId"  style="height: 30px; border-radius: 5px;width: 300px;"  name="country" required>	      
-					          		<option style="text-align: center;" th:value="null">--Chọn--</option>
-						            <option th:each="country : ${countryList}" th:value="${country.id}" th:text="${country.name}"></option>
-					          </select>
-				          </div>
-				          
-							<div class="col-md-6" th:if="${admin.city}" >
-							  <label class="small mb-1" for="cityId">Tỉnh *</label>
-					          <select id="cityId" style="height: 30px; border-radius: 5px;width: 300px;" th:value="${admin.city}"  name="city" required>
-						            <option style="text-align: center;" th:value="null">--Chọn--</option>
-						            <option th:each="city : ${cityList}" th:value="${city.id}" th:text="${city.name}" th:selected="${city.id == admin.city.id}"></option>
-					          </select>
+-->
+												<div class="col-md-6"
+													th:if="${admin.city != null and admin.city.country !=null}">
+													<label class="small mb-1" for="countryId">Quốc Gia *</label>
+													<select id="countryId"
+														style="height: 30px; border-radius: 5px;width: 300px;"
+														name="country" th:value="${admin.city.country}" required>
+														<option style="text-align: center;" th:value="null">--Chọn--
+														</option>
+														<option th:each="country : ${countryList}"
+															th:value="${country.id}" th:text="${country.name}"
+															th:selected="${country.id == admin.city.country.id}">
+														</option>
+													</select>
+												</div>
+
+												<div class="col-md-6"
+													th:if="${admin.city == null or admin.city.country == null}">
+													<label class="small mb-1" for="countryId">Quốc Gia *</label>
+													<select id="countryId"
+														style="height: 30px; border-radius: 5px;width: 300px;"
+														name="country" required>
+														<option style="text-align: center;" th:value="null">--Chọn--
+														</option>
+														<option th:each="country : ${countryList}"
+															th:value="${country.id}" th:text="${country.name}"></option>
+													</select>
+												</div>
+
+												<div class="col-md-6" th:if="${admin.city}">
+													<label class="small mb-1" for="cityId">Tỉnh *</label>
+													<select id="cityId"
+														style="height: 30px; border-radius: 5px;width: 300px;"
+														th:value="${admin.city}" name="city" required>
+														<option style="text-align: center;" th:value="null">--Chọn--
+														</option>
+														<option th:each="city : ${cityList}" th:value="${city.id}"
+															th:text="${city.name}"
+															th:selected="${city.id == admin.city.id}"></option>
+													</select>
+												</div>
+
+												<div class="col-md-6" th:if="${admin.city == null}">
+													<label class="small mb-1" for="cityId">Tỉnh *</label>
+													<select id="cityId"
+														style="height: 30px; border-radius: 5px;width: 300px;"
+														name="city" required>
+														<option style="text-align: center;" th:value="null">--Chọn--
+														</option>
+													</select>
+												</div>
+
+											</div>
+
+											<!-- Form Row-->
+											<div class="row gx-3 mb-3">
+												<!-- Form Group (phone number)-->
+												<div class="col-md-6">
+													<label class="small mb-1" for="phoneNumberId">Số điện thoại</label>
+													<input class="form-control" id="phoneNumberId" name="phoneNumber"
+														th:value="${admin.phoneNumber}" type="tel" maxlength="10"
+														minlength="10" placeholder="Enter your phone number">
+												</div>
+												<!-- Form Group (birthday)-->
+												<div class="col-md-6">
+													<label class="small mb-1" for="inputBirthday">Năm sinh</label>
+													<input class="form-control" id="inputBirthday"
+														th:value="${admin.birthDay}" type="date" name="birthDay">
+												</div>
+											</div>
+											<!-- Save changes button-->
+											<button class="btn btn-primary" type="submit">Lưu</button>
+
+										</div>
+									</div>
+								</div>
 							</div>
-							
-							<div class="col-md-6" th:if="${admin.city == null}" >
-							  <label class="small mb-1" for="cityId">Tỉnh *</label>
-					          <select id="cityId" style="height: 30px; border-radius: 5px;width: 300px;" name="city"required>
-						            <option style="text-align: center;" th:value="null">--Chọn--</option>	        
-					          </select>
-							</div>
-							
-                        </div>
+						</form>
+					</div>
 
-                        <!-- Form Row-->
-                        <div class="row gx-3 mb-3">
-                            <!-- Form Group (phone number)-->
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="phoneNumberId">Số điện thoại</label>
-                                <input class="form-control" id="phoneNumberId" name="phoneNumber" th:value="${admin.phoneNumber}" type="tel" maxlength="10" minlength="10" placeholder="Enter your phone number" >
-                            </div>
-                            <!-- Form Group (birthday)-->
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputBirthday">Năm sinh</label>
-                                <input class="form-control" id="inputBirthday" th:value="${admin.birthDay}"  type="date" name="birthDay"  >
-                            </div>
-                        </div>
-                        <!-- Save changes button-->
-                        <button class="btn btn-primary" type="submit">Lưu</button>
-                    
-                </div>
-            </div>
-        </div>
-    </div>
-    </form>
-</div>
 
-                    
 
-                </div>
-                <!-- /.container-fluid -->
-                
-             </div>
-            <!-- End of Main Content -->
-            
-             <!-- Footer -->
-            <footer th:replace="~{fragments :: footer}">       
-            </footer>
-            <!-- End of Footer -->
-            
-             </div>
-        <!-- End of Content Wrapper -->
+				</div>
+				<!-- /.container-fluid -->
 
-    </div>
-    <!-- End of Page Wrapper -->
+			</div>
+			<!-- End of Main Content -->
 
-    <!-- Scroll to Top Button-->
-    <a th:replace="~{fragments :: scroll}">
-    </a>
+			<!-- Footer -->
+			<footer th:replace="~{fragments :: footer}">
+			</footer>
+			<!-- End of Footer -->
 
-    <!-- Logout Modal-->
-    <div th:replace="~{fragments :: logoutModal}"></div>
+		</div>
+		<!-- End of Content Wrapper -->
 
-    <!-- Bootstrap core JavaScript-->
-    <div th:replace="~{fragments :: script}">
+	</div>
+	<!-- End of Page Wrapper -->
+
+	<!-- Scroll to Top Button-->
+	<a th:replace="~{fragments :: scroll}">
+	</a>
+
+	<!-- Logout Modal-->
+	<div th:replace="~{fragments :: logoutModal}"></div>
+
+	<!-- Bootstrap core JavaScript-->
+	<div th:replace="~{fragments :: script}">
 	</div>
 
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+	<!-- Page level plugins -->
+	<script src="vendor/chart.js/Chart.min.js"></script>
 
-<script th:src="@{/js/profile.js}"></script>
+	<script th:src="@{/js/profile.js}"></script>
 </body>
+
 </html>

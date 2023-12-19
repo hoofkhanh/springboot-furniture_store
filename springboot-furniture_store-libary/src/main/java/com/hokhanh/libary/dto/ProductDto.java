@@ -25,4 +25,6 @@ public class ProductDto {
 
 	private boolean activated;
 	private boolean hidden;
+	
+	private int sold;
 }

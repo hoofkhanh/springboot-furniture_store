@@ -34,15 +34,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class="custom-select-box">
-                        <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
-                            <option>¥ JPY</option>
-                            <option>$ USD</option>
-                            <option>€ EUR</option>
-                        </select>
-                    </div>
+            
                     <div class="right-phone-box">
-                        <p>Call US :- <a href="#"> +11 900 800 100</a></p>
+                        <p>Liên hệ :- <a href="#"> +11 900 800 100</a></p>
                     </div>
                     <div class="our-link">
                         <ul>
@@ -54,10 +48,10 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					<a th:href="@{/account}">
-						<img th:if="${session.customer != null and session.customer.image == null}" th:src="@{/images/avatar-facebook-mac-dinh-19.jpg}"  style="width: 30px; height: 30px; margin-left: 490px; border-radius: 50%; object-fit: cover;">
+						<img th:if="${session.customer != null and session.customer.image == null}" th:src="@{/images/avatar-facebook-mac-dinh-19.jpg}"  style="width: 30px; height: 30px; margin-left: 379px; border-radius: 50%; object-fit: cover;">
 					</a>
 					<a th:href="@{/account}">
-						<img th:if="${session.customer != null and session.customer.image != null}" th:src="'data:image/jpeg;base64,'+${session.customer.image}"  style="width: 30px; height: 30px; margin-left: 490px; border-radius: 50%; object-fit: cover;">	
+						<img th:if="${session.customer != null and session.customer.image != null}" th:src="'data:image/jpeg;base64,'+${session.customer.image}"  style="width: 30px; height: 30px; margin-left: 379px; border-radius: 50%; object-fit: cover;">	
 					</a>
                     <div class="login-box">
 						
@@ -158,11 +152,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2>ABOUT US</h2>
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Shop Detail</li>
-                    </ul>
+                    <h2 >CỬA HÀNG NỘI THẤT</h2>
                 </div>
             </div>
         </div>
@@ -193,26 +183,26 @@
             <div class="row">
                 <div class="col-lg-4 col-md-12 col-sm-12">
                     <div class="footer-top-box">
-                        <h3>Business Time</h3>
+                        <h3>Thời gian làm việc</h3>
                         <ul class="list-time">
-                            <li>Monday - Sunday: 08.00am to 10.00pm</li>
+                            <li>Thứ 2 - thứ 7: 08.00am to 10.00pm</li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-12 col-sm-12">
                     <div class="footer-top-box">
-                        <h3>Contact Us</h3>
+                        <h3>Thông tin liên hệ</h3>
                         <ul class="list-time">
-                            <li><i class="fas fa-phone-square"></i> Phone number: +84967631186</li>
+                            <li><i class="fas fa-phone-square"></i> Số điện thoại: +84967631186</li>
                             <li><i class="fas fa-envelope"></i> Email: abc@gmail.com</li>
-                            <li><i class="fas fa-map-marker-alt"></i> Address: Km9, Nguyen Trai, Thanh Xuan</li>
+                            <li><i class="fas fa-map-marker-alt"></i> Địa chỉ: Hồng Ngự</li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-12 col-sm-12">
                     <div class="footer-top-box">
-                        <h3>Social Media</h3>
-                        <p>Come with Ocean Prime shop - Only Fresh </p>
+                        <h3>Mạng xã hội</h3>
+                        <p style="color: white;">Ho Khanh Shop </p>
                         <ul>
                             <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
                             <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>

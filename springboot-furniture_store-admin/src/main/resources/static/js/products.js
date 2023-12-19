@@ -1,3 +1,4 @@
+
 $('document').ready(function() {
 
 	$('.table #editButton').on('click', function(event) {
@@ -21,6 +22,7 @@ $('document').ready(function() {
 			$('#salesEdit').val(product.salePrice);
 			$('#activatedEdit').val(product.activated);
 			$('#hiddenEdit').val(product.hidden);
+			$('#soldEdit').val(product.sold);
 
 			if (product.image) {
 				$('#imgEdit').show();

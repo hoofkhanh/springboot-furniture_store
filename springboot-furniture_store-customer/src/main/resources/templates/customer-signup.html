@@ -83,10 +83,10 @@
 	          
 	           <div style="margin-left: 80px;">
 	                <label class="small mb-1" for="inputUsername">Nam</label>
-	               <input  name="gender" type="radio" value="Nam" th:checked="${customer.gender == 'Nam'}"> 
+	               <input  name="gender" type="radio" value="Nam" th:checked="${customer.gender == 'Nam'}" required> 
 	                            
 	                <label class="small mb-1" for="inputUsername" style="margin-left: 10px;">Nữ</label>
-	               <input  name="gender" type="radio" value="Nữ" th:checked="${customer.gender == 'Nữ'}">
+	               <input  name="gender" type="radio" value="Nữ" th:checked="${customer.gender == 'Nữ'}" required>
 	           </div>
 	            
 	       
@@ -94,10 +94,7 @@
 		
 		
 		<div class="centerHalf">
-			<div class="inputDiv">
-	            <label class="inputLabel" for="usernameId">Tài khoản *</label>
-	            <input type="text" id="usernameId" name="username" th:value="${customer.username}" readonly required>
-	          </div>
+			
 			
 	          <div class="inputDiv">
 	            <label class="inputLabel" for="phoneNumberId">Số điện thoại *</label>
@@ -145,6 +142,11 @@
 		</div>
           
           <div class="rightHalf">
+			  
+			  <div class="inputDiv">
+	            <label class="inputLabel" for="usernameId">Tài khoản *</label>
+	            <input type="text" id="usernameId" name="username" th:value="${customer.username}" readonly required>
+	          </div>
 	         
 				
 			<div class="inputDiv">

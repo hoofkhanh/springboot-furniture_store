@@ -130,10 +130,11 @@
                             <tbody>
                                 <tr th:each="item : ${shoppingCart.cartItems}" class="tr_each">
                                     <td class="thumbnail-img">
-                                        <a href="#">
-											<img class="img-fluid" th:src="'data:image/jpef;base64,' + ${item.product.image}" 
+                                       
+										<a th:href="@{/find-productById(id = ${item.product.id})}">
+									  <img class="img-fluid" th:src="'data:image/jpef;base64,' + ${item.product.image}" 
 												style="width: 80px; height: 80px;" alt="" />
-										</a>
+								  </a>	
                                     </td>
                                     <td class="name-pr">
                                         <p th:text="${item.product.name}" style="font-weight: bold;" class="nameClass"></p>
@@ -223,13 +224,13 @@
                         </div>
                         <hr>
                         <div class="d-flex gr-total">
-                            <h5>Tổng cộng</h5>
+                            <h5 style="color: darkred;">Tổng cộng</h5>
                         	<div id="totalId" th:if="${shoppingCart !=null}" class="ml-auto h5"  th:text="'$' +${#numbers.formatDecimal(shoppingCart.totalPrice + 30, 1, 'COMMA', 1, 'POINT')}"></div>
 
                         </div>
                         <hr> </div>
                 </div>
-                <div class="col-12 d-flex shopping-box"><a th:href="@{/checkout}" class="ml-auto btn hvr-hover">Checkout</a> </div>
+                <div class="col-12 d-flex shopping-box"><a th:href="@{/checkout}" class="ml-auto btn hvr-hover" style="background-color: darkred;">Đặt hàng</a> </div>
             </div>
 
         </div>
@@ -272,6 +273,8 @@
     </div>
   </div>
 </div>
+
+
 
         
 

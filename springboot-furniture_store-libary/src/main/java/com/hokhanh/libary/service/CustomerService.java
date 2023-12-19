@@ -13,4 +13,14 @@ public interface CustomerService {
 	
 	Customer update(Customer customer, MultipartFile customerImage);
 	
+	void updateResetPasswordToken(String token, String email);
+	
+	Customer getByResetPasswordToken(String token);
+	
+	void upadtePassword(Customer customer, String newPassword) ;
+	
+	Customer findByPassword(String password, String email);
+		
+	
+	
 }

@@ -2,8 +2,7 @@ package com.hokhanh.libary.serviceImpl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
-
+import java.util.List;import org.aspectj.asm.internal.ProgramElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -69,7 +68,6 @@ public class OrderServiceImpl implements OrderService {
 			
 			Product product = cartItem.getProduct();
 			product.setCurrentQuantity(product.getCurrentQuantity() - cartItem.getQuantity());
-			product.setSold(product.getSold() + cartItem.getQuantity());
 			this.productRepository.save(product);
 				
 			cartItemAfterOrder.add(cartItem);
@@ -99,7 +97,7 @@ public class OrderServiceImpl implements OrderService {
 		List<CartItem> cartItems = order.getCartItem();
 		for (CartItem cartItem : cartItems) {
 			Product product = cartItem.getProduct();
-			product.setCurrentQuantity(cartItem.getQuantity() + product.getCurrentQuantity());
+			product.setCurrentQuantity(cartItem.getQuantity() + product.getCurrentQuantity());	
 			this.productRepository.save(product);
 		}
 		
@@ -148,6 +146,12 @@ public class OrderServiceImpl implements OrderService {
 		Order order= this.orderRepository.findById(id).get();
 		order.setAccept(true);
 		order.setOrderStatus("Đang Ship");
+		List<CartItem> cartItems =  order.getCartItem();
+		for (CartItem cartItem : cartItems) {
+			Product product = cartItem.getProduct();
+			product.setSold(product.getSold() + cartItem.getQuantity());
+			this.productRepository.save(product);
+		}
 		this.orderRepository.save(order);
 	}
 
@@ -158,6 +162,13 @@ public class OrderServiceImpl implements OrderService {
 		Order order= this.orderRepository.findById(id).get();
 		order.setAccept(false);
 		order.setOrderStatus("Đang chờ xác nhận");
+		
+		List<CartItem> cartItems =  order.getCartItem();
+		for (CartItem cartItem : cartItems) {
+			Product product = cartItem.getProduct();
+			product.setSold(product.getSold() - cartItem.getQuantity());
+			this.productRepository.save(product);
+		}
 		this.orderRepository.save(order);
 	}
 
@@ -168,6 +179,9 @@ public class OrderServiceImpl implements OrderService {
 		return this.orderRepository.findByCustomer(customer);
 	}
 
-	
+	@Override
+	public List<Object[]> findAllToTalPriceOfOrderByMonth() {
+		return this.orderRepository.sumTotalPriceByMonth();
+	}
 
 }

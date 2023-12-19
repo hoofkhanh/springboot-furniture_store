@@ -47,6 +47,9 @@ public class Customer {
 	private LocalDate birthDay;
 	private String gender;
 	
+	@Column(name = "reset_password_token")
+	private String resetPasswordToken;
+	
 	@Lob
 	@Column(columnDefinition = "MEDIUMBLOB")
 	private String image;

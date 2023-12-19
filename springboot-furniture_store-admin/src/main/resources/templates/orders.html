@@ -41,10 +41,10 @@
                 <div class="container-fluid">
 					
 					<form th:action="@{/orders/search}" method="get" id="search">
-                       <input type="text" name="keyword" placeholder="Search order" th:value="${keyword}" id="inputSearch">
+                       <input type="text" name="keyword" placeholder="Tìm kiếm đơn đặt" th:value="${keyword}" id="inputSearch">
                        <input type="hidden" name="pageNo" value="1">
                        <button type="submit" class="btn btn-primary" >
-						   Search
+						   Tìm Kiếm
 					   </button>
                     </form>
                     
@@ -76,8 +76,9 @@
 						       <th scope="col">Tên</th>
 						      <th scope="col">Số lượng</th>
 						      <th scope="col">Giá</th>
-						      <th scope="col">Ship</th>
+						      
 						      <th scope="col">Tiền</th>
+						      <th scope="col">Ship</th>
 						      <th scope="col">Ngày đặt</th>
 						      
 						      <th scope="col">Ngày giao</th>
@@ -106,9 +107,11 @@
 							      <td  th:if="${cartItem.product.salePrice <=0}" th:text="'$'+${#numbers.formatDecimal(cartItem.product.costPrice, 1, 'COMMA', 1, 'POINT')}" ></td>
 							      <td th:if="${cartItem.product.salePrice >0}" th:text="'$'+${#numbers.formatDecimal(cartItem.product.salePrice, 1, 'COMMA', 1, 'POINT')}" ></td>
 							      
-							      <td>$30</td>
+							      
 							      
 							      <td th:text="'$'+${cartItem.totalPrice}" ></td>
+							      
+							      <td th:if="${status.index ==0}" th:rowspan="${order.cartItem.size()}" >$30</td>
 							      
 							      <td   th:if="${status.index ==0}" th:rowspan="${order.cartItem.size()}" th:text="${order.orderDate}" ></td>
 				
@@ -127,11 +130,11 @@
 							     
 								  
 								  <td  th:if="${status.index ==0}" th:rowspan="${order.cartItem.size()}">
-									  <a th:if="${searchProduct == null}" 
+									  <a th:if="${searchProduct == null and order.isAccept == false}" 
 									  	 th:href="@{/orders/deleteById(id = ${order.id}, currentPage = ${currentPage})}"
 									  	 id="deleteButton" class="btn btn-danger">Xóa
 									  </a>
-									   <a th:if="${searchProduct != null}" 
+									   <a th:if="${searchProduct != null and order.isAccept == false}" 
 									  	 th:href="@{/orders/search/deleteById(id = ${order.id}, pageNo = ${currentPage}, keyword = ${keyword} )}"
 									  	 id="deleteButton" class="btn btn-danger">Xóa
 									  </a>
@@ -459,15 +462,15 @@
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete</h1>
+	        <h1 class="modal-title fs-5" id="exampleModalLabel">Xác nhận</h1>
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
-	        Bạn có muốn chấp nhận đơn đặt hàng này không
+	        Bạn có muốn xác nhận không
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-	        <a href="" id="confirmAcceptButton" class="btn btn-primary">Chấp nhận</a>
+	        <a href="" id="confirmAcceptButton" class="btn btn-primary">Xác nhận</a>
 	      </div>
 	    </div>
 	  </div>

@@ -418,4 +418,11 @@ public class OrderController {
 		}
 		return "orders";
 	}
+	
+	@GetMapping("/findAllOrder")
+	@ResponseBody
+	public List<Object[]> findAllToTalPriceOfOrderByMonth() {
+		List<Object[]> orderList = this.orderService.findAllToTalPriceOfOrderByMonth();
+		return orderList;
+	}
 }

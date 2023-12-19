@@ -6,6 +6,8 @@ import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -80,6 +82,45 @@ public class CustomerServiceImpl implements CustomerService {
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+
+	@Override
+	public void updateResetPasswordToken(String token, String email) throws UsernameNotFoundException  {
+		Customer customer = this.customerRepository.findByUsername(email);
+		if(customer != null) {
+			customer.setResetPasswordToken(token);
+			this.customerRepository.save(customer);
+		}else {
+			throw new UsernameNotFoundException("không tìm thấy bất kì khách hàng nào với email này "+ email);
+		}
+	}
+
+	@Override
+	public Customer getByResetPasswordToken(String token) {
+		return this.customerRepository.findByResetPasswordToken(token);
+	}
+
+	@Override
+	public void upadtePassword(Customer customer, String newPassword) {
+		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+		String encodePassword = bCryptPasswordEncoder.encode(newPassword);
+		customer.setPassword(encodePassword);
+		
+		customer.setResetPasswordToken(null);
+		this.customerRepository.save(customer);
+	}
+
+	@Override
+	public Customer findByPassword(String password, String email) {
+		Customer customer = this.customerRepository.findByUsername(email);
+		
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		
+		if (encoder.matches(password, customer.getPassword())) {
+		    return customer;
+		} else {
+		    return null;
 		}
 	}
 

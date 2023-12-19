@@ -26,4 +26,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 	Page<Order> searchOrders(@Param("keyword") String keyword, @Param("number") double quantity, Pageable pageable);
 	
 	List<Order> findByCustomer(Customer customer);
+	
+	@Query(value = "SELECT MONTH(order_date), SUM(total_price) FROM orders WHERE YEAR(order_date) = YEAR(NOW()) AND order_status = 'Đang Ship' "
+			+ "GROUP BY MONTH(order_date) ORDER BY MONTH(order_date) DESC", nativeQuery = true)
+	List<Object[]> sumTotalPriceByMonth();
 }

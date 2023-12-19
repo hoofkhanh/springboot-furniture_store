@@ -88,8 +88,9 @@
                                     <th style="text-align: center;">Tên</th>
                                     <th style="text-align: center;">Số lượng</th>
                                     <th style="text-align: center;">Giá</th>
-                                    <th style="text-align: center;">Ship</th>
+                                    
                                     <th  style="text-align: center;">Tiền</th>
+                                    <th style="text-align: center;">Ship</th>
                                     <th style="text-align: center;">Ngày đặt</th>                                   
                                     <th  style="text-align: center;">Ngày giao</th>
                                     <th  style="text-align: center;">Trạng thái</th>
@@ -103,8 +104,9 @@
 								<div th:each="order : ${orderList}">
 	                                <tr th:if="${order.orderStatus != 'Đang Ship'}" id="tr_each" th:each="cartItem, status  : ${order.cartItem}" style="text-align: center;" th:class="${'tr_each' + order.id}">
 	                                    <td class="thumbnail-img" >
-	                                        <a href="#">
-												<img class="img-fluid" th:src="'data:image/jpeg;base64,' + ${cartItem.product.image}" 
+	                                       
+											<a th:href="@{/find-productById(id = ${cartItem.product.id})}">
+											  <img class="img-fluid" th:src="'data:image/jpeg;base64,' + ${cartItem.product.image}" 
 													style="width: 80px; height: 80px;" alt="" />
 											</a>
 	                                    </td>
@@ -117,7 +119,7 @@
 	                                    
 	                                    <td th:if="${cartItem.product.salePrice >0}"  th:text="${cartItem.product.salePrice}" style="text-align: center;" ></td>
 	                                    
-	                                    <td>$30</td>
+	                                   
 	                                    
 	                                    <td th:if="${cartItem.product.salePrice <=0}" style="text-align: center;" >
 	                                        <p  th:text="'$' + ${#numbers.formatDecimal(cartItem.quantity * cartItem.product.costPrice, 1, 'COMMA', 1, 'POINT')}"></p>
@@ -125,6 +127,8 @@
 	                                    <td th:if="${cartItem.product.salePrice >0}" style="text-align: center;" >
 	                                        <p  th:text="'$' + ${#numbers.formatDecimal(cartItem.quantity * cartItem.product.salePrice, 1, 'COMMA', 1, 'POINT')}"></p>
 	                                    </td>
+	                                    
+	                                     <td  style="text-align: center;" th:if="${status.index ==0}" th:rowspan="${order.cartItem.size()}">$30</td>
 	                                    
 	                                    <td style="text-align: center;" th:if="${status.index ==0}" th:rowspan="${order.cartItem.size()}">
 	                                        <p th:text="${order.orderDate}"></p>
@@ -179,6 +183,22 @@
 <!-- Start Footer  -->
 <footer th:replace="~{fragments :: myFooter}"></footer>
         
+        
+<!--Image Modal-->
+	<div class="modal fade"  id="imageModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" >
+	    <div class="modal-content">
+	      <div class="modal-header">
+	   
+	       
+	      </div>
+	      <div class="modal-body">
+	        <img src="" id="imageButtonModal" style="width: 400px; height: 400px;">
+	      </div>
+	      
+	    </div>
+	  </div>
+	</div>         
 
 <!--Script-->
 <div th:replace="~{fragments :: script}">

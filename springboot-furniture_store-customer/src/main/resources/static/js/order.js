@@ -38,4 +38,16 @@ $(document).ready(function(){
 			
 			
 	});
+	
+	$('#imageButton').on('click', function(event) {
+		event.preventDefault();
+
+		var href = $(this).attr('href');
+		console.log(href)
+		$('#imageButtonModal').attr('src', href);
+
+		$('#imageModal').modal('show');
+		
+		
+	});
 });

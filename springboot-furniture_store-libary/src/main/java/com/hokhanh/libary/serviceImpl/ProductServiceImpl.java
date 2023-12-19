@@ -83,6 +83,7 @@ public class ProductServiceImpl implements ProductService {
 				product.setHidden(productDto.isHidden());
 				product.setDescription(productDto.getDescription());
 				product.setSalePrice(productDto.getSalePrice());
+				product.setSold(productDto.getSold());
 
 			}
 		} catch (Exception e) {
@@ -237,6 +238,21 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> findProductBestSeller_menuPage(Long category_id) {
 		return this.productRepository.findProductBestSeller_menuPage(category_id);
+	}
+
+	@Override
+	public List<Product> findProduct_saleByCate(Long category_id) {
+		return this.productRepository.findProduct_sale_byCate(category_id);
+	}
+
+	@Override
+	public List<Product> findProduct_sale() {
+		return this.productRepository.findProduct_sale();
+	}
+
+	@Override
+	public List<Product> findProduct_search(String name) {
+		return this.productRepository.findProduct_SearchByName(name);
 	}
 
 }

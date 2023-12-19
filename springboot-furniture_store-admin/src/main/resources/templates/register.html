@@ -12,11 +12,11 @@
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row">
-                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-5 d-none d-lg-block"><img th:src="@{/img/logo2.jpg}" style="width: 500px; height: 445px; background-color: black;"></div>
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                                <h1 class="h4 text-gray-900 mb-4">Tạo tài khoản!</h1>
                             </div>
                             
                             <div th:if="${emailError}">
@@ -91,9 +91,7 @@
                                 </a>-->
                             </form>
                             <hr>
-                            <div class="text-center">
-                                <a class="small" th:href="@{/forgot-password}">Quên mật khẩu?</a>
-                            </div>
+                           
                             <div class="text-center">
                                 <a class="small" th:href="@{/login}">Bạn đã có một tài khoản ? Đăng nhập!</a>
                             </div>

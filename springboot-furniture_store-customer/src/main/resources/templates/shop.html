@@ -51,6 +51,7 @@
     <!-- Start Main Top -->
     <header th:replace="~{fragments :: mainHeader}"></header>
     <!-- End Main Top -->
+    
 
     <!-- Start Top Search -->
     <div th:replace="~{fragments :: topSearch}"></div>
@@ -59,6 +60,8 @@
     <!-- Start Slider -->
     <div th:replace="~{fragments :: allTitleBox}"></div>
     <!-- End Slider -->
+
+    
 
     <!-- Start Shop Page  -->
     <div class="shop-box-inner">
@@ -69,21 +72,21 @@
                         <div class="product-item-filter row">
                             <div class="col-12 col-sm-8 text-center text-sm-left">
                                 <div class="toolbar-sorter-right">
-                                    <span>Sort by </span>
+                                    <span>Sắp xếp bởi </span>
                                     <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD"
                                     	onchange="location = this.value;">
-                                    <option data-display="Select">Select</option>
-									<option th:value="@{/products/byCategory(category_id = ${category_id})}">All</option>
+                                    <option data-display="Select">Chọn</option>
+									<option th:value="@{/products/byCategory(category_id = ${category_id})}">Tất cả</option>
 									<option th:value="@{/products/high-to-low-price(category_id = ${category_id})}">
-								        High Price → Low Price
+								        Giá cao → Giá thấp
 								    </option>
 									<option th:value="@{/products/low-to-high-price(category_id = ${category_id})}">
-										Low Price → High Price
+										Giá thấp → Giá cao
 									</option>
-									<option th:value="@{/products/bestSeller(category_id = ${category_id})}">Best Selling</option>
+									<option th:value="@{/products/bestSeller(category_id = ${category_id})}">Bán chạy</option>
+									<option th:value="@{/products/sale(category_id = ${category_id})}">Giảm giá</option>
 								</select>
                                 </div>
-                                <p>Showing all results</p>
                             </div>
                             <div class="col-12 col-sm-4 text-center text-sm-right">
                                 <ul class="nav nav-tabs ml-auto">
@@ -100,6 +103,8 @@
                         <div th:if="${productList.empty}" style="color: red; font-size: 40px; text-align: center;">
 							No Products
 						</div>
+						
+						
 
                         <div class="product-categorie-box">
                             <div class="tab-content">
@@ -113,11 +118,11 @@
 	                                            <div class="products-single fix">
 	                                                <div class="box-img-hover">                                       
 	                                                    <img th:src="'data:image/jpeg;base64,' + ${product.image}" style="width: 330px; height: 220px;"
-	                                                    	 class="img-fluid" alt="Image">
+	                                                    	 class="img-fluid " alt="Image">
 	                                                    <div class="mask-icon">
 	                                                        <ul>
 	                                                            <li id="dropdown"><a th:href="@{/find-productById(id = ${product.id})}"
-	                                                            	 data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+	                                                            	 data-toggle="tooltip" data-placement="right" title="Thông tin" ><i class="fa-solid fa-book"></i></a></li>
 	                                                        </ul>
 	                                                       <!-- <button type="submit" id="buttonSubbmit" class="btn hvr-hover" th:if="${product.currentQuantity > 0}"
 							                                	style=" color: white; font-size: 20px; border: 2px solid yellow;cursor: pointer;
@@ -140,7 +145,7 @@
 						                	</form>
                                         </div>                                                               
                                     </div>
-                                    <button id="loadMore"   type="button">Load More</button>
+                                    <button id="loadMore"   type="button">Xem thêm</button>
                                 </div>
                                 
                               	
@@ -152,8 +157,8 @@
                                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
                                                 <div class="products-single fix">
                                                     <div class="box-img-hover">
-                                                        <img th:src="'data:image/jpeg;base64,' + ${product.image}" style="width: 330px; height: 220px;" 
-                                                        	class="img-fluid" alt="Image">
+                                                        <img th:src="'data:image/jpeg;base64,' + ${product.image}" style="width: 330px; height: 220px; border-radius: 50%;" 
+                                                        	class="img-fluid border border-dark" alt="Image">
                                                     </div>
                                                 </div>
                                             </div>
@@ -170,7 +175,7 @@
 	                                                  <h4 th:if="${product.currentQuantity > 0}" th:text="'Kho : ' + ${product.currentQuantity}"  style="color: darkgray; font-family: 'Times New Roman', Times, serif; "></h4>
 	                                                    
                                                     <button type="submit" id="buttonSubbmit" class="btn hvr-hover" th:if="${product.currentQuantity > 0}"
-							                                	style=" color: white; font-size: 20px; border: 2px solid yellow;cursor: pointer;
+							                                	style=" color: white;background-color: rgb(255, 0, 0); font-size: 20px; border: 2px solid rgb(255, 128, 64);cursor: pointer;
 							                                	font-family: 'Times New Roman', Times, serif;">
 							                                	<a id="dropdown" th:href="@{/find-productById(id = ${product.id})}">
 							                               			Xem chi tiết
@@ -183,7 +188,7 @@
                                             </div>
                                         </div>
                                     </div>     
-                                    <button id="loadMore2"  type="button">Load More</button>                           
+                                    <button id="loadMore2"  type="button">Xem thêm</button>                           
                                 </div>
                                 
                             </div>
@@ -192,13 +197,20 @@
                 </div>
                 
 				<div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12 sidebar-shop-left">
-                    <div class="product-categori">
-                        <div class="search-product">
-                            <form action="#">
-                                <input class="form-control" placeholder="Search here..." type="text">
+                    <div class="product-categori">	
+						  <div class="search-product">
+                            <form th:action="@{/products/search}">
+                                <input class="form-control" name="name" th:value="${name}" type="text" list="productName" >
+                                <datalist id="productName"   style="cursor: pointer; text-decoration: underline;">
+									<option  th:each="product : ${searchList}" th:value="${product.name}"></option>
+								</datalist>
                                 <button type="submit"> <i class="fa fa-search"></i> </button>
                             </form>
-                        </div>
+                       	 </div>
+                       	 
+                       
+           	 
+                       
                         <div class="filter-sidebar-left">
                             <div class="title-left">
                                 <h3>Loại</h3>

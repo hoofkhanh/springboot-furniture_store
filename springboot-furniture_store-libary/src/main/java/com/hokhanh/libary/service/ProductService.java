@@ -31,11 +31,6 @@ public interface ProductService {
 	
 //	Customer
 	
-	List<Product> findProductBestSeller_DESC_SOLD();
-	
-	List<Product> findProductBestSeller_DESC_SOLD_BY_CATE(Long category_id);
-	
-	List<Product> findProductBestSeller_menuPage(Long category_id);
 	
 	List<Product> getAllProduct();
 	
@@ -51,4 +46,16 @@ public interface ProductService {
 	
 	List<Product> sort_getProduct_byLowToHighPrice_byCategory(Long id);
 	
+	List<Product> findProductBestSeller_DESC_SOLD();
+	
+	List<Product> findProductBestSeller_DESC_SOLD_BY_CATE(Long category_id);
+	
+	List<Product> findProductBestSeller_menuPage(Long category_id);
+	
+	
+	List<Product> findProduct_saleByCate(Long category_id);
+	
+	List<Product> findProduct_sale();
+	
+	List<Product> findProduct_search(String name);
 }

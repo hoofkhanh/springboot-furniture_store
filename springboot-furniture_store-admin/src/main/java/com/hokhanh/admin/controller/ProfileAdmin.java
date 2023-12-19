@@ -20,6 +20,8 @@ import com.hokhanh.libary.service.AdminService;
 import com.hokhanh.libary.service.CityService;
 import com.hokhanh.libary.service.CountryService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class ProfileAdmin {
 	
@@ -34,7 +36,7 @@ public class ProfileAdmin {
 
 
 	@GetMapping("profile")
-	public String profile(Authentication authentication, Model m) {
+	public String profile(Authentication authentication, Model m, HttpSession httpSession) {
 		m.addAttribute("title", "Profile");
 		
 		Admin admin = this.adminService.findByUsername(authentication.getName());
@@ -44,9 +46,12 @@ public class ProfileAdmin {
 		Admin temp =  (Admin) m.asMap().get("admin");
 		if(temp == null) {
 			m.addAttribute("admin", admin);	
+			httpSession.setAttribute("admin", admin);
 		}else {
 			m.addAttribute("admin", temp);
+			httpSession.setAttribute("admin", temp);
 		}
+		
 		
 		m.addAttribute("admin", admin);
 		m.addAttribute("countryList", countryList);

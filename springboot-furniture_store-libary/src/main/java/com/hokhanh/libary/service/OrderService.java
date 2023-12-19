@@ -31,4 +31,6 @@ public interface OrderService {
 	void acceptOrder(Long id);
 
 	void refuseById(Long id);
+	
+	public List<Object[]> findAllToTalPriceOfOrderByMonth();
 }

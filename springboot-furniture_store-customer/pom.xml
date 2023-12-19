@@ -74,6 +74,13 @@
 			<artifactId>springboot-furniture_store-libary</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy -->
+		<dependency>
+		    <groupId>net.bytebuddy</groupId>
+		    <artifactId>byte-buddy</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>

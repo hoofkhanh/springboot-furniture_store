@@ -16,7 +16,6 @@ public class CustomerDto {
 	@Size(min = 2, max = 20, message = "Họ nên có 2 đến 20 kí tự")
 	private String lastName;
 	
-	@Size(min = 2, max = 20, message = "Tài khoản nên có 2 đến 20 kí tự")
 	private String username;
 	
 	@Size(min = 2, max = 20, message = "Mật khẩu nên có 2 đến 20 kí tự")

@@ -48,7 +48,7 @@
 	                            <img th:src="'data:image/jpeg;base64,' + ${product.image}" style="width: 330px; height: 220px;" class="img-fluid"  alt="Image">
 	                            <div class="mask-icon">
 	                                <ul>
-	                                    <li id="dropdown" ><a th:href="@{/find-productById(id = ${product.id})}" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+	                                    <li id="dropdown" ><a th:href="@{/find-productById(id = ${product.id})}" data-toggle="tooltip" data-placement="right" title="Thông tin"><i class="fa-solid fa-book"></i></a></li>
 	                                </ul>
 	                                
 	                               <!-- <button type="submit" id="buttonSubbmit" class="btn hvr-hover" th:if="${product.currentQuantity > 0}"

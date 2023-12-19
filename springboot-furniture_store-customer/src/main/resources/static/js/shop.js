@@ -79,7 +79,7 @@ $(document).ready(function() {
 			maxIndex2 += 3;
 		}
 			console.log(index2)
-	console.log(maxIndex2)
+	
 		
 		for(var i = index2; i< maxIndex2 ; i++){
 			productList2[i].style.display='block';						
@@ -90,6 +90,8 @@ $(document).ready(function() {
 		}
 		
 	});
+	
+	
 	
 	
 

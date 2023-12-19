@@ -1,6 +1,7 @@
 package com.hokhanh.admin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import com.hokhanh.libary.model.Admin;
 import com.hokhanh.libary.repository.AdminRepository;
 import com.hokhanh.libary.service.AdminService;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
@@ -26,14 +28,23 @@ public class LoginController {
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@GetMapping("/index")
-	public String index(Model model) {
+	public String index(Model model, Authentication authentication, HttpSession httpSession) {
+		Admin admin = this.adminService.findByUsername(authentication.getName());
+		httpSession.setAttribute("admin", admin);
 		model.addAttribute("title", "HOME PAGE");
+		
+		
 		return "index";
 	}
 	
 	@GetMapping("/login")
-	public String login(Model model) {
+	public String login(Model model, Authentication authentication) {
 		model.addAttribute("title", "LOGIN");
+		
+		if(authentication != null) {
+			return "redirect:/index";
+		}
+		
 		return "login";
 	}
 	

@@ -25,27 +25,32 @@
     <section id="login-form">
         <div class="noi-dung">
             <div class="form">
-                <h2>Log In</h2>
+                <h2>Đăng nhập</h2>
                 <div class="alert alert-danger text-center" th:if="${param.error}">Invalid username or password !</div>
                 <div class="alert alert-success text-center" th:if="${param.logout}">Logout Successfully !</div>
+                 <div class="alert alert-success text-center" th:if="${success}" th:text="${success}"></div>
                 <form th:action="@{/do-login}" method="post">
                     <div class="input-form">
                         <!-- <span>User name</span> -->
-                        <input type="text" placeholder="Tài khoản" name="username">
+                        <input type="email" th:value="${customer.username}" placeholder="Email" name="username">
                     </div>
                     <div class="input-form">
                         <!-- <span>Password</span> -->
-                        <input type="password" placeholder="Mật khẩu" name="password">
+                        <input th:value="${customer.password}" type="password" placeholder="Mật khẩu" name="password">
                     </div>
                     <div class="Remember-me">
-                        <label><input type="checkbox" name="">Nhớ mật khẩu </label>
+                        <label><input type="checkbox"  	name="remember-me">Nhớ mật khẩu </label>
                     </div>
                     <div class="input-form">
                         <input type="submit" value="Đăng nhập">
                     </div>
                     <div class="input-form">
+						<p>Bạn muốn đổi mật khẩu ? <a th:href="@{/change-password}">Đổi mật khẩu  </a></p>
                         <p>Đăng chưa có tài khoản ? <a th:href="@{/register}">Đăng kí ngay  </a></p>
+                        <p>Bạn đã quên mật khẩu ? <a th:href="@{/forgot-password}">Quên mật khẩu  </a></p>
                     </div>
+                    
+ 
                 </form>
                 <h3>Log In With Social Network</h3>
                 <ul class="icon-dang-nhap">

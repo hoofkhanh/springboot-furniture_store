@@ -5,6 +5,13 @@ $(document).ready(function() {
 		var quantity = $(this).val();
 		var maxQuantity = $(this).attr("max");
 		var minQuantity = $(this).attr("min");
+		
+		if(quantity.indexOf('.') > -1){
+			var newValue = parseInt(quantity*10);
+			console.log(newValue)
+			quantity= newValue
+			$(this).val(newValue)
+		}
 
 
 		if (quantity != '' && parseInt(quantity) > parseInt(maxQuantity)) {
@@ -87,6 +94,15 @@ $(document).ready(function() {
 		if(newMaxQuantity2 == 0){
 			$('.input-field-quantity').attr("min", 0);
 		}	
+	});
+	
+	$('#imageButton').on('click', function(event) {
+		event.preventDefault();
+
+		var href = $(this).attr('href');
+		$('#imageButtonModal').attr('src', href);
+
+		$('#imageModal').modal('show');
 	});
 
 

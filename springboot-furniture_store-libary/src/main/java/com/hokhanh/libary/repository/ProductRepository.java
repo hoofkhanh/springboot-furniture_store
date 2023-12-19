@@ -48,14 +48,23 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 		@Query(value = "SELECT * FROM products WHERE category_id = :category_id AND activated = true AND hidden = false ORDER BY cost_price", nativeQuery = true)
 		List<Product> sort_getProduct_byLowToHighPrice_byCategory(@Param("category_id") Long category_id);
 		
-		@Query(value = "SELECT * FROM products where activated = true AND hidden = false  ORDER BY sold DESC", nativeQuery = true)
+		@Query(value = "SELECT * FROM products where activated = true AND hidden = false and sold > 0  ORDER BY sold DESC", nativeQuery = true)
 		List<Product> findProductBestSeller_DESC_SOLD();
 		
-		@Query(value = "SELECT * FROM products WHERE category_id = :category_id AND activated = true AND hidden = false ORDER BY sold DESC", nativeQuery = true)
+		@Query(value = "SELECT * FROM products WHERE category_id = :category_id AND activated = true AND hidden = false and sold>0 ORDER BY sold DESC", nativeQuery = true)
 		List<Product> findProductBestSeller_DESC_SOLD_BY_CATE(@Param("category_id") Long category_id);
 		
-		@Query(value = "SELECT * FROM products WHERE category_id = :category_id AND activated = true AND hidden = false ORDER BY sold desc	 LIMIT 4", nativeQuery = true)
+		@Query(value = "SELECT * FROM products WHERE category_id = :category_id AND activated = true AND hidden = false AND sold > 0 ORDER BY sold desc	 LIMIT 4", nativeQuery = true)
 		List<Product> findProductBestSeller_menuPage(@Param("category_id") Long category_id);
+
+		@Query(value = "SELECT * FROM products WHERE category_id = :category_id AND activated = true AND hidden = false AND sale_price >0 ORDER BY sale_price", nativeQuery = true)
+		List<Product> findProduct_sale_byCate(@Param("category_id") Long category_id);
+		
+		@Query(value = "SELECT * FROM products WHERE activated = true AND hidden = false AND sale_price >0 ORDER BY sale_price", nativeQuery = true)
+		List<Product> findProduct_sale();
+		
+		@Query(value = "SELECT * FROM products WHERE activated = true AND hidden = false AND name LIKE %:name% ORDER BY cost_price", nativeQuery = true)
+		List<Product> findProduct_SearchByName(String name);
 		
 		
 		

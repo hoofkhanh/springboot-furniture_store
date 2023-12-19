@@ -551,6 +551,7 @@ section .noi-dung .form .icon-dang-nhap li i{
     float: right;
     width: 120px;
     margin-left: 20px;
+    width: 35%;
 }
 
 .login-box .form-control{
@@ -1511,7 +1512,7 @@ section .noi-dung .form .icon-dang-nhap li i{
      transition: all 0.3s ease;
 }
  .main-instagram.owl-carousel .owl-nav button.owl-next:hover, .main-instagram.owl-carousel .owl-nav button.owl-prev:hover{
-     background: #b0b435;
+     background: rgb(255, 128, 0);
 }
  .ins-inner-box{
      position: relative;
@@ -1785,7 +1786,7 @@ section .noi-dung .form .icon-dang-nhap li i{
 }
 /*------------------------------------------------------------------ All Pages -------------------------------------------------------------------*/
  .all-title-box{
-     background: url("../images/Crab 02 - Crab Toast.jpg") no-repeat center center;
+     background: url("../images/noithat.jpg") no-repeat center center;
      -webkit-background-size: cover;
      -moz-background-size: cover;
      -ms-background-size: cover;
@@ -1793,7 +1794,7 @@ section .noi-dung .form .icon-dang-nhap li i{
      background-size: cover;
      text-align: center;
      background-attachment: fixed;
-     padding: 70px 0px;
+     padding: 200px 0px;
      position: relative;
 }
  .all-title-box::before{
@@ -2113,7 +2114,7 @@ section .noi-dung .form .icon-dang-nhap li i{
      border-left: 1px solid #ced4da;
 }
  .list-group-tree .list-group-item.active {
-     color: #b0b435;
+     color: rgb(255, 128, 0);
      background-color: #fff;
      font-weight: 700;
 }
@@ -2127,7 +2128,7 @@ section .noi-dung .form .icon-dang-nhap li i{
      background-color: #ced4da;
 }
  .list-group-tree .list-group-item:hover {
-     color: #b0b435;
+     color: rgb(255, 128, 0);
      background-color: #fff;
      outline: 0;
      font-weight: 700;
@@ -2321,7 +2322,7 @@ section .noi-dung .form .icon-dang-nhap li i{
      padding: 70px 0px;
 }
  .table-main table thead{
-     background: rgb(255, 128, 64);
+     background: rgb(0, 0, 0);
      color: #ffffff;
 }
  .table-main .table thead th{
@@ -2886,7 +2887,7 @@ section .noi-dung .form .icon-dang-nhap li i{
      text-align: center;
 }
  .featured-products-box .owl-nav button.owl-prev:hover, .featured-products-box .owl-nav button.owl-next:hover{
-     background: #b0b435;
+     background: rgb(255, 128, 0);
 }
  .table-responsive .table td, .table-responsive .table th {
      vertical-align: middle;

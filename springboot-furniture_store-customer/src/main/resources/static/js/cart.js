@@ -7,6 +7,13 @@ $(document).ready(function() {
 		var id = form.find('.productClass').val();
 		var quantity = $(this).val();
 		var maxQuantity = $(this).attr("max");
+		
+		if(quantity.indexOf('.') > -1){
+			var newValue = parseInt(quantity*10);
+			console.log(newValue)
+			quantity= newValue
+			$(this).val(newValue)
+		}
 
 
 		if (quantity != '' && parseInt(quantity) > parseInt(maxQuantity)) {
@@ -133,38 +140,24 @@ $(document).ready(function() {
 				});
 
 				$.ajax({
-					type: "GET",
-					url: "/shop/checkTotalPirce",
-					success: function(totalPrice) {
-						totalPrice = parseFloat(totalPrice);
-						if (totalPrice != null) {
-							var newTotalPrice = totalPrice.toString();
-							if (newTotalPrice.length >= 5) {
-								var newTotalPrice_2 = newTotalPrice.substring(0, 5);
-								$('#totalPriceId').text('$' + newTotalPrice_2);
-							} else {
-								$('#totalPriceId').text('$' + totalPrice);
+						type: "GET",
+						url: "/shop/checkTotalPirce",
+						success: function(totalPrice) {
+							totalPrice = parseFloat(totalPrice);
+							if (totalPrice != null) {
+								totalPrice = parseFloat(totalPrice);
+								
+								var formatTotalPrice = numeral(totalPrice).format('0,0.0');
+								console.log(formatTotalPrice)
+								$('#totalPriceId').text('$' + formatTotalPrice);
+									
+
+								var newTotal = numeral(totalPrice + 30).format('0,0.0');
+								console.log(newTotal)
+								$('#totalId').text('$' + newTotal);
+
 							}
-
-
-							var newTax = (totalPrice * 0.01).toString();
-							if (newTax.length >= 5) {
-								var newTax_2 = newTax.substring(0, 5);
-								$('#taxId').text('$' + newTax_2);
-							} else {
-								$('#taxId').text('$' + (totalPrice * 0.01));
-							}
-
-							var newTotal = (totalPrice + (totalPrice * 0.01) + 30).toString();
-							if (newTotal.length >= 5) {
-								var newTotalPrice_2 = newTotal.substring(0, 5);
-								$('#totalId').text('$' + newTotalPrice_2);
-							} else {
-								$('#totalId').text('$' + totalPrice + (totalPrice * 0.01) + 30);
-							}
-
-						}
-					},
+						},
 					error: function() {
 						console.error('Error updating item in cart');
 					}
@@ -224,6 +217,8 @@ $(document).ready(function() {
 
 		$(this).closest('.input-button-container').find('.quantityClass').trigger('input');
 	});
+	
+
 
 
 });

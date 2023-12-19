@@ -26,18 +26,20 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 					
+				
+					
 					<form th:action="@{/products/search}" method="get" id="search">
-                       <input type="text" name="keyword" placeholder="Search products" th:value="${keyword}" id="inputSearch">
+                       <input type="text" name="keyword" placeholder="Tìm kiếm sản phẩm" th:value="${keyword}" id="inputSearch">
                        <input type="hidden" name="pageNo" value="1">
                        <button type="submit" class="btn btn-primary" >
-						   Search
+						   Tìm kiếm
 					   </button>
                     </form>
                     
                     <br>
                     
 					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insertModal" 
-						data-bs-whatever="@mdo">Insert Product
+						data-bs-whatever="@mdo">Thêm sản phẩm 
 					</button>
 		
 					
@@ -57,18 +59,28 @@
 	               <table class="table" th:if="${not productList.empty}" >
 						  <thead>
 						    <tr>
-						      <th scope="col">Name</th>
-						      <th scope="col">Category</th>
-						      <th scope="col">Price</th>
-						      <th scope="col">Quantity</th>
-						      <th scope="col">Image</th>
-						      <th scope="col">Update</th>
-						      <th scope="col">Delete</th>
-						      <th scope="col">Action</th>
+								<th scope="col">Hình ảnh</th>
+						      <th scope="col">Tên</th>
+						      <th scope="col">Loại</th>
+						      <th scope="col">Giá</th>
+						      <th scope="col">Số lượng</th>
+						       <th scope="col">Đã bán</th>
+						      
+						      <th scope="col">Chỉnh sửa</th>
+						      <th scope="col">Xóa</th>
+						      <th scope="col">Phương thức</th>
 						    </tr>
 						  </thead>
 						  <tbody>
+							  
 						    <tr th:each="product:${productList}">
+								 <td  th:if="${product.image != null}">
+								  <a id="imageButton" th:href="'data:image/jpeg;base64,' + ${product.image}">
+									  <img th:src="'data:image/jpeg;base64,' + ${product.image}" style="height: 40px; width: 40px;">
+								  </a>	  
+						      </td>
+						      <td  th:if="${product.image == null}">No image</td>
+						      
 						      <td th:text="${product.name}" ></td>
 						      
 						      <td th:if="${product.category}" th:text="${product.category.name}"></td>
@@ -76,12 +88,7 @@
 												      
 						      <td th:text="${product.costPrice}" ></td>
 						      <td th:text="${product.currentQuantity}" ></td>
-						      <td  th:if="${product.image != null}">
-								  <a id="imageButton" th:href="'data:image/jpeg;base64,' + ${product.image}">
-									  <img th:src="'data:image/jpeg;base64,' + ${product.image}" style="height: 40px; width: 40px;">
-								  </a>	  
-						      </td>
-						      <td  th:if="${product.image == null}">No image</td>
+						      <td th:text="${product.sold}" ></td>
 						      
 						      <td>
 								   <a th:href="@{/products/getById(id = ${product.id})}" 
@@ -92,11 +99,11 @@
 							  <td>
 								  <a th:if="${searchProduct == null}" 
 								  	 th:href="@{/products/deleteById(id = ${product.id}, currentPage = ${currentPage})}"
-								  	 id="deleteButton" class="btn btn-success"><i class="fa-solid fa-trash"></i>
+								  	 id="deleteButton" class="btn btn-danger"><i class="fa-solid fa-trash"></i>
 								  </a>
 								   <a th:if="${searchProduct != null}" 
 								  	 th:href="@{/products/search/deleteById(id = ${product.id}, pageNo = ${currentPage}, keyword = ${keyword} )}"
-								  	 id="deleteButton" class="btn btn-success"><i class="fa-solid fa-trash"></i>
+								  	 id="deleteButton" class="btn btn-danger"><i class="fa-solid fa-trash"></i>
 								  </a>
 							  </td>
 							  
@@ -104,20 +111,20 @@
 					  
 								  <a th:if="${searchProduct == null and product.hidden}" 
 								  	 th:href="@{/products/activatedById(id = ${product.id}, currentPage = ${currentPage})}"
-								  	 id="activatedButton" class="btn btn-success">Activate
+								  	 id="activatedButton" class="btn btn-success">Kích hoạt
 								  </a>
 								   <a th:if="${searchProduct != null and product.hidden}" 
 								  	 th:href="@{/products/search/activatedById(id = ${product.id}, pageNo = ${currentPage}, keyword = ${keyword} )}"
-								  	 id="activatedButton" class="btn btn-success">Activate
+								  	 id="activatedButton" class="btn btn-success">Kích hoạt
 								  </a>
 								  
 								  <a th:if="${searchProduct == null and product.hidden == false}" 
 								  	 th:href="@{/products/hiddenById(id = ${product.id}, currentPage = ${currentPage})}"
-								  	 id="hiddenButton" class="btn btn-dark">Hide
+								  	 id="hiddenButton" class="btn btn-dark">Ẩn
 								  </a>
 								   <a th:if="${searchProduct != null and product.hidden == false}" 
 								  	 th:href="@{/products/search/hiddenById(id = ${product.id}, pageNo = ${currentPage}, keyword = ${keyword} )}"
-								  	 id="hiddenButton" class="btn btn-dark">Hide
+								  	 id="hiddenButton" class="btn btn-dark">Ẩn
 								  </a>
 							  </td>
 						    </tr>
@@ -130,7 +137,7 @@
 					  <nav aria-label="..." th:if="${searchProduct == null and not productList.empty and currentPage !=null}">
 	                      <ul class="pagination" >
 	                         <li th:if= "${currentPage > 1}" class="page-item ">
-	                                <a th:href = "@{'/products/' + ${currentPage - 1}}" class="page-link">Previous</a>
+	                                <a th:href = "@{'/products/' + ${currentPage - 1}}" class="page-link">Sau</a>
 	                         </li >	
 	                         
 	                         <li th:each = "i : ${#numbers.sequence(1, totalPage)}"
@@ -141,7 +148,7 @@
 							 </li>
 							
 	                         <li th:if = "${currentPage  < totalPage}" class="page-item">
-	                              <a th:href = "@{'/products/' + ${currentPage + 1}}" class="page-link" href="#">Next</a>
+	                              <a th:href = "@{'/products/' + ${currentPage + 1}}" class="page-link" href="#">Trước</a>
 	                         </li>
 	                      </ul>
 	                   </nav>
@@ -150,7 +157,7 @@
                     <nav aria-label="..." th:if="${searchProduct != null and not productList.empty and currentPage !=null}">
                         <ul class="pagination" >
                             <li th:if= "${currentPage > 1}" class="page-item ">
-                                <a th:href = "@{/products/search(keyword = ${keyword},pageNo = ${currentPage -1})}" class="page-link">Previous</a>
+                                <a th:href = "@{/products/search(keyword = ${keyword},pageNo = ${currentPage -1})}" class="page-link">Trước</a>
                             </li >	
                             <li th:each = "i : ${#numbers.sequence(1, totalPage)}" th:classappend = "${currentPage == i ? 'active' : ''}" class="page-item">
                                 <a th:href = "@{/products/search(keyword = ${keyword}, pageNo = ${i})}" class="page-link" href="#">
@@ -158,7 +165,7 @@
 							     </a>
 							 </li>
                             <li th:if = "${currentPage  < totalPage}" class="page-item">
-                                <a th:href = "@{/products/search(keyword = ${keyword}, pageNo = ${currentPage + 1})}" class="page-link" href="#">Next</a>
+                                <a th:href = "@{/products/search(keyword = ${keyword}, pageNo = ${currentPage + 1})}" class="page-link" href="#">Sau</a>
                             </li>
                         </ul>
                     </nav>
@@ -194,7 +201,7 @@
 	  <div class="modal-dialog modal-lg" >
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h1 class="modal-title fs-5" id="exampleModalLabel">Insert Product</h1>
+	        <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm sản phẩm</h1>
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
@@ -203,12 +210,12 @@
 				  <tr>
 					  <td >
 						  <div class="mb-3">
-				            <label for="recipient-name" class="col-form-label">PRODUCT NAME:</label>
+				            <label for="recipient-name" class="col-form-label">Tên:</label>
 				            <input type="text" class="form-control" id="recipient-name" name="name" required>
 				          </div>
 				          
 				          <div class="mb-3">
-				            <label for="recipient-name" class="col-form-label">PRODUCT CATEGORY:</label>
+				            <label for="recipient-name" class="col-form-label">Loại:</label>
 				            <select  class="form-control" id="recipient-name" name="category" required>
 								<option th:value="null">-SELECT-</option>
 								<option th:each="category:${categoryList}" th:value="${category.id}" th:text="${category.name}" >	
@@ -217,24 +224,24 @@
 				          </div>
 				          
 				          <div class="mb-3">
-				            <label for="recipient-name" class="col-form-label">PRODUCT DESCRIPTION:</label>
+				            <label for="recipient-name" class="col-form-label">Mô tả:</label>
 				            <input type="text" class="form-control" id="recipient-name" name="description" >
 					  </td>
 					  
 					  <td style="padding-left: 100px;">
 						  			          
 				          <div class="mb-3">
-				            <label for="recipient-name" class="col-form-label">AVAILABLE QUANTITY:</label>
+				            <label for="recipient-name" class="col-form-label">Số lượng:</label>
 				            <input type="number" class="form-control" id="recipient-name" name="currentQuantity" required>
 				          </div>
 				          
 				          <div class="mb-3">
-				            <label for="recipient-name" class="col-form-label">PRICE:</label>
+				            <label for="recipient-name" class="col-form-label">Giá:</label>
 				            <input type="number" class="form-control" id="recipient-name" name="costPrice" step="any" required>
 				          </div>
 				          
 				          <div class="mb-3">
-				            <label for="recipient-name" class="col-form-label">PRODUCT IMAGE:</label>
+				            <label for="recipient-name" class="col-form-label">Hình ảnh:</label>
 				            <br>
 				            <input type="file" class="input-file" id="recipient-name" name="imageProduct">
 				          </div>
@@ -244,8 +251,8 @@
 				 <tr>
 					 <td colspan="2">
 						 <div class="modal-footer">
-					        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					        <button type="submit" class="btn btn-primary">Insert</button>
+					        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+					        <button type="submit" class="btn btn-primary">Thêm</button>
 				   		</div>
 					 </td>
 				 </tr>
@@ -262,7 +269,7 @@
 	  <div class="modal-dialog modal-lg" >
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h1 class="modal-title fs-5" id="exampleModalLabel">Insert Product</h1>
+	        <h1 class="modal-title fs-5" id="exampleModalLabel">Chỉnh sửa</h1>
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
@@ -270,6 +277,7 @@
 	          <table style="width: 100%;">
 				   <input type="hidden" name="activated" id="activatedEdit">
 					<input type="hidden" name="hidden" id="hiddenEdit">
+					<input type="hidden" name="sold" id="soldEdit">
 				  <tr>
 					  <td >
 						  <div class="mb-3">
@@ -278,12 +286,12 @@
 				          </div>
 						  
 						  <div class="mb-3">
-				            <label for="recipient-name" class="col-form-label">PRODUCT NAME:</label>
+				            <label for="recipient-name" class="col-form-label">Tên:</label>
 				            <input type="text" class="form-control" id="nameEdit" name="name" required>
 				          </div>
 				          
 				          <div class="mb-3">
-				            <label for="recipient-name" class="col-form-label">PRODUCT CATEGORY:</label>
+				            <label for="recipient-name" class="col-form-label">Loại:</label>
 				            <select  class="form-control" id="categoryEdit" name="category" required>
 								<option th:value="null">-SELECT-</option>
 								<option th:each="category:${categoryList}" th:value="${category.id}" th:text="${category.name}" >	
@@ -292,7 +300,7 @@
 				          </div>
 				          
 				          <div class="mb-3">
-				            <label for="recipient-name" class="col-form-label">PRODUCT DESCRIPTION:</label>
+				            <label for="recipient-name" class="col-form-label">Mô tả:</label>
 				            <input type="text" class="form-control" id="descriptionEdit" name="description">
         
 					  </td>
@@ -301,22 +309,22 @@
 						  
 					  
 						  <div class="mb-3">
-				            <label for="recipient-name" class="col-form-label">AVAILABLE QUANTITY:</label>
+				            <label for="recipient-name" class="col-form-label">Số lượng:</label>
 				            <input type="number" class="form-control" id="currentQuantityEdit" name="currentQuantity" required>
 				          </div>
 						  			          		          
 				          <div class="mb-3">
-				            <label for="recipient-name" class="col-form-label">PRICE:</label>
+				            <label for="recipient-name" class="col-form-label">Giá:</label>
 				            <input type="number" class="form-control" id="costPriceEdit" name="costPrice" step="any" required>
 				          </div>
 				          
 				          <div class="mb-3">
-				            <label for="recipient-name" class="col-form-label">SALE:</label>
+				            <label for="recipient-name" class="col-form-label">Giảm giá:</label>
 				            <input type="number" class="form-control" id="salesEdit" name="salePrice" step="any">
 				          </div>
 				          
 				          <div class="mb-3">
-				            <label for="recipient-name" class="col-form-label">PRODUCT IMAGE:</label>
+				            <label for="recipient-name" class="col-form-label">Hình ảnh:</label>
 				            <img src="" style="width: 40px; height: 40px;" id="imgEdit"><br>
 				            <input type="file" class="input-file" id="imageProductEdit" name="imageProduct">
 				          </div>
@@ -326,8 +334,8 @@
 				 <tr>
 					 <td colspan="2">
 						 <div class="modal-footer">
-					        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					        <button type="submit" class="btn btn-primary">Edit</button>
+					        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+					        <button type="submit" class="btn btn-primary">Chỉnh sửa</button>
 				   		</div>
 					 </td>
 				 </tr>
@@ -348,11 +356,11 @@
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
-	        Do you want to Hide this recored
+	        Bạn có muốn ẩn sản phẩm này không
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	        <a href="" id="confirmHiddenButton" class="btn btn-primary">Hide</a>
+	        <a href="" id="confirmHiddenButton" class="btn btn-primary">Ẩn</a>
 	      </div>
 	    </div>
 	  </div>
@@ -369,11 +377,11 @@
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
-	        Do you want to Activate this recored
+	        bạn có muốn kích hoạt sản phẩm này không
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	        <a href="" id="confirmActivatedButton" class="btn btn-primary">Activated</a>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+	        <a href="" id="confirmActivatedButton" class="btn btn-primary">Kích hoạt</a>
 	      </div>
 	    </div>
 	  </div>
@@ -388,11 +396,11 @@
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
-	        Do you want to Delete this recored
+	        Bạn có muốn xóa sản phẩm này không
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	        <a href="" id="confirmDeleteButton" class="btn btn-primary">Delete</a>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+	        <a href="" id="confirmDeleteButton" class="btn btn-primary">Xóa</a>
 	      </div>
 	    </div>
 	  </div>
@@ -403,7 +411,7 @@
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h1 class="modal-title fs-5" id="exampleModalLabel">IMAGE</h1>
+	        <h1 class="modal-title fs-5" id="exampleModalLabel">Ảnh</h1>
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">

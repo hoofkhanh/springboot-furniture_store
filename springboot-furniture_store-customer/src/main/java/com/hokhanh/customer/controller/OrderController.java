@@ -51,7 +51,9 @@ public class OrderController {
 				|| customer.getAddress().trim().isEmpty() || customer.getPhoneNumber().trim().isEmpty() || customer.getGender().trim().isEmpty() ) {
 			model.addAttribute("customer", customer);
 			return "redirect:/account";
-		} else {
+		}else if(customer.getShoppingCarts() == null || customer.getShoppingCarts().getCartItems() == null || customer.getShoppingCarts().getCartItems() == null || customer.getShoppingCarts().getCartItems().isEmpty()) {
+			return "redirect:/cart";
+		}else {
 			model.addAttribute("customer", customer);
 		}
 
@@ -124,10 +126,15 @@ public class OrderController {
 	public String findAll(Authentication authentication) {
 		Customer customer = this.customerService.findByUsername(authentication.getName());
 		List<Order> orders = this.orderService.findByCustomer(customer);
-		if(orders == null || orders.isEmpty()) {
-			return "null";
-		}else {
-			return "not null";
+		
+		for (Order order : orders) {
+			if(order.getOrderStatus().equalsIgnoreCase("Đang chờ xác nhận")) {
+				return "not null";
+			}
 		}
+		
+		
+		return "null";
 	}
+	
 }
